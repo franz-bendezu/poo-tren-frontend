@@ -4,7 +4,7 @@ const API_URL = "http://localhost:8080";
 
 export function useFetch(path, options) {
   const [data, setData] = useState();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState();
   useEffect(() => {
     async function fetchData() {

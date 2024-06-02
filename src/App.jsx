@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { EmployeeView } from "./views/EmployeeView";
+import { CustomerView } from "./views/CustomerView";
+import { CardView } from "./views/CardView";
 
 export default function App() {
   const [employeeCode, setEmmployeeCode] = useState();
@@ -51,8 +53,8 @@ export default function App() {
         </div>
       </div>
       {tab === "empleados" && <EmployeeView />}
-      {tab === "clientes" && <p>Contenido de los clientes</p>}
-      {tab === "tarjetas" && <p>Contenido de los Tarjetas</p>}
+      {tab === "clientes" && <CustomerView/>}
+      {tab === "tarjetas" && <CardView/>}
       {tab === "boletos" && <p>Contenido de los Boletos</p>}
     </div>
   );

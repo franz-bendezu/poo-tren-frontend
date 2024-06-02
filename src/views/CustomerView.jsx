@@ -5,6 +5,9 @@ export function CustomerView() {
   return (
     <div>
       <h3>Clientes </h3>
+    <div className="buttons ">
+      <button className="button is-primary">Nuevo Cliente</button>
+    </div>
       <table className="table is-bordered">
         <thead>
           <tr>

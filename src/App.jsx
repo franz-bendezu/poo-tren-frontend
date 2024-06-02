@@ -7,13 +7,19 @@ export default function App() {
   }
   return (
     <div>
-      <h1>Bienvenido</h1>
-      <input
-        value={employeeCode}
-        onChange={handleChangeEmployeeCode}
-        type="text"
-        placeholder="Ingresa tu código de empleado"
-      />
+      <h1 className="title">Bienvenido</h1>
+      <div className="field">
+        <label className="label">Name</label>
+        <div className="control">
+          <input
+            className="input"
+            value={employeeCode}
+            onChange={handleChangeEmployeeCode}
+            type="text"
+            placeholder="Ingresa tu código de empleado"
+          />
+        </div>
+      </div>
       <p>{employeeCode}</p>
     </div>
   );

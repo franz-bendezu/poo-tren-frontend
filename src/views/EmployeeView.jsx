@@ -2,14 +2,17 @@ import { useFetch } from "../hooks/useFetch";
 import { useState } from "react";
 import { EmployeeCreateView } from "./EmployeeCreateView";
 
-export function EmployeeView() {
+export function EmployeeView(props) {
   const { data: employees, error, isLoading } = useFetch("/empleados/mostrar");
+  const { employeeCode } = props;
 
   const [isOpenCreateEmployee, setIsOpenCreateEmployee] = useState(false);
   return (
     <div>
       <h3>Contenido de los Empleados </h3>
-      {isOpenCreateEmployee && <EmployeeCreateView />}
+      {isOpenCreateEmployee && (
+        <EmployeeCreateView employeeCode={employeeCode} />
+      )}
       <div className="buttons ">
         <button
           className="button is-primary"

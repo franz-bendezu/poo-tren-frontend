@@ -52,9 +52,9 @@ export default function App() {
           </button>
         </div>
       </div>
-      {tab === "empleados" && <EmployeeView />}
-      {tab === "clientes" && <CustomerView/>}
-      {tab === "tarjetas" && <CardView/>}
+      {tab === "empleados" && <EmployeeView employeeCode={employeeCode} />}
+      {tab === "clientes" && <CustomerView employeeCode={employeeCode} />}
+      {tab === "tarjetas" && <CardView employeeCode={employeeCode} />}
       {tab === "boletos" && <p>Contenido de los Boletos</p>}
     </div>
   );

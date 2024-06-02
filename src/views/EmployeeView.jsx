@@ -1,49 +1,42 @@
+import { useFetch } from "../hooks/useFetch";
 export function EmployeeView() {
-  const employees = [
-    {
-      id: 1,
-      name: "Juan",
-      lastName: "Pérez",
-      email: "",
-    },
-    {
-      id: 2,
-      name: "María",
-      lastName: "Gómez",
-      email: "",
-    },
-    {
-      id: 3,
-      name: "José",
-      lastName: "Hernández",
-      email: "",
-    },
-    {
-      id: 4,
-      name: "Ana",
-      lastName: "Martínez",
-      email: "",
-    },
-  ];
+  const { data: employees, error, isLoading } = useFetch("/empleados/mostrar");
+
   return (
     <div>
       <h3>Contenido de los Empleados </h3>
       <table className="table is-bordered">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Dni</th>
+            <th>Ciudad</th>
+            <th>Dirección</th>
+            <th>Usuario</th>
           </tr>
         </thead>
         <tbody>
-          {employees.map((employee) => (
+          {isLoading ? (
             <tr>
-              <td>{employee.id}</td>
-              <td>{employee.name}</td>
-              <td>{employee.lastName}</td>
+              <td colSpan="6">Cargando...</td>
             </tr>
-          ))}
+          ) : error ? (
+            <tr>
+              <td colSpan="6">Error: {error}</td>
+            </tr>
+          ) : (
+            employees.map((employee) => (
+              <tr key={employee.codigo}>
+                <td>{employee.nombres}</td>
+                <td>{employee.apellidos}</td>
+                <td>{employee.dni}</td>
+                <td>{employee.ciudad}</td>
+                <td>{employee.direccion}</td>
+                <td>{employee.usuario}</td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
     </div>

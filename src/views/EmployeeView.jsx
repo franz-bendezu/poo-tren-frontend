@@ -3,15 +3,29 @@ import { useState } from "react";
 import { EmployeeCreateView } from "./EmployeeCreateView";
 
 export function EmployeeView(props) {
-  const { data: employees, error, isLoading } = useFetch("/empleados/mostrar");
+  const {
+    data: employees,
+    error,
+    isLoading,
+    mutate,
+  } = useFetch("/empleados/mostrar");
   const { employeeCode } = props;
 
   const [isOpenCreateEmployee, setIsOpenCreateEmployee] = useState(false);
+
+  const handleOnSuccessCreateEmployee = async () => {
+    setIsOpenCreateEmployee(false);
+    await mutate();
+  };
   return (
     <div>
       <h3>Contenido de los Empleados </h3>
       {isOpenCreateEmployee && (
-        <EmployeeCreateView employeeCode={employeeCode} />
+        <EmployeeCreateView
+          employeeCode={employeeCode}
+          onCancel={() => setIsOpenCreateEmployee(false)}
+          onSucess={handleOnSuccessCreateEmployee}
+        />
       )}
       <div className="buttons ">
         <button

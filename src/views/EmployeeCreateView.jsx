@@ -1,6 +1,6 @@
 import { useFetchMutation } from "../hooks/useFetch";
 
-export function EmployeeCreateView({ employeeCode }) {
+export function EmployeeCreateView({ employeeCode, onSucess, onCancel }) {
   const { mutate } = useFetchMutation("/empleados/crear");
   async function handleSubmit(event) {
     event.preventDefault();
@@ -13,10 +13,10 @@ export function EmployeeCreateView({ employeeCode }) {
       ciudad: elForm.ciudad.value,
       estacion: elForm.estacion.value,
       direccion: elForm.direccion.value,
-      telefono: elForm.telefono.value,
-      email: elForm.email.value,
-      empleado: employeeCode,
+      usuario: elForm.usuario.value,
+      clave: elForm.clave.value,
     });
+    onSucess?.();
   }
 
   return (
@@ -99,24 +99,24 @@ export function EmployeeCreateView({ employeeCode }) {
           </div>
         </div>
         <div className="field">
-          <label className="label">Teléfono</label>
+          <label className="label">Usuario</label>
           <div className="control">
             <input
               className="input"
               type="text"
-              placeholder="Teléfono"
-              name="telefono"
+              placeholder="Usuario"
+              name="usuario"
             />
           </div>
         </div>
         <div className="field">
-          <label className="label">Email</label>
+          <label className="label">Clave</label>
           <div className="control">
             <input
               className="input"
-              type="text"
-              placeholder="Email"
-              name="email"
+              type="password"
+              placeholder="Clave"
+              name="clave"
             />
           </div>
         </div>
@@ -126,7 +126,7 @@ export function EmployeeCreateView({ employeeCode }) {
           <button type="submit">Guardar</button>
         </div>
         <div className="card-footer-item">
-          <button type="button" className="button">
+          <button type="button" className="button" onClick={onCancel}>
             Cancelar
           </button>
         </div>

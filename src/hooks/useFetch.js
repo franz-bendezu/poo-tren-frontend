@@ -26,14 +26,13 @@ export function useFetch(path, options) {
     data,
     isLoading,
     error,
-    mutate
+    mutate,
   };
 }
 
-export function useFetchMutation(
-  path,
-  options = { method: "POST", headers: { "Content-Type": "application/json" } }
-) {
+export function useFetchMutation(path, options = {}) {
+  const { method = "POST", headers = { "Content-Type": "application/json" } } =
+    options;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
   const mutate = async (data) => {
@@ -42,6 +41,8 @@ export function useFetchMutation(
       setError();
       const response = await fetch(`${API_URL}${path}`, {
         ...options,
+        method,
+        headers,
         body: JSON.stringify(data),
       });
       const text = await response.text();

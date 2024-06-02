@@ -9,6 +9,7 @@ export function useFetch(path, options) {
   async function mutate() {
     try {
       setIsLoading(true);
+      setError();
       const response = await fetch(`${API_URL}${path}`, options);
       const data = await response.json();
       setData(data);
@@ -38,6 +39,7 @@ export function useFetchMutation(
   const mutate = async (data) => {
     try {
       setIsLoading(true);
+      setError();
       const response = await fetch(`${API_URL}${path}`, {
         ...options,
         body: JSON.stringify(data),

@@ -27,3 +27,34 @@ export function useFetch(path, options) {
     error,
   };
 }
+
+export function useFetchMutation(
+  path,
+  options = { method: "POST", headers: { "Content-Type": "application/json" } }
+) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+  const mutate = async (data) => {
+    try {
+      setIsLoading(true);
+      const response = await fetch(`${API_URL}${path}`, {
+        ...options,
+        body: JSON.stringify(data),
+      });
+      const text = await response.text();
+      if (text.includes("Error")) {
+        setError(text);
+      }
+    } catch (error) {
+      setError(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return {
+    mutate,
+    isLoading,
+    error,
+  };
+}

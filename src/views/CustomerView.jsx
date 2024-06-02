@@ -1,13 +1,38 @@
+import { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
-export function CustomerView() {
-  const { data: customers, error, isLoading } = useFetch("/clientes/mostrar");
+import { CustomerCreateView } from "./CustomerCreateView";
+
+export function CustomerView({ employeeCode }) {
+  const {
+    data: customers,
+    error,
+    isLoading,
+    mutate,
+  } = useFetch("/clientes/mostrar");
+  const [isOpenCreateClient, setIsOpenCreateClient] = useState(false);
+  const handleOnSuccessCreateClient = async () => {
+    setIsOpenCreateClient(false);
+    await mutate();
+  };
 
   return (
     <div>
       <h3>Clientes </h3>
-    <div className="buttons ">
-      <button className="button is-primary">Nuevo Cliente</button>
-    </div>
+      <div className="buttons ">
+        <button
+          className="button is-primary"
+          onClick={() => setIsOpenCreateClient(true)}
+        >
+          Nuevo Cliente
+        </button>
+      </div>
+      {isOpenCreateClient && (
+        <CustomerCreateView
+          employeeCode={employeeCode}
+          onCancel={() => setIsOpenCreateClient(false)}
+          onSuccess={handleOnSuccessCreateClient}
+        />
+      )}
       <table className="table is-bordered">
         <thead>
           <tr>

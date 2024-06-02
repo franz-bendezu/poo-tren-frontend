@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
 import { CardCreateView } from "./CardCreateView";
+import { CardRechargeView } from "./CardRechargeView";
 
 export function CardView({ employeeCode }) {
   const {
@@ -14,6 +15,13 @@ export function CardView({ employeeCode }) {
     setIsOpenCreateCard(false);
     await mutate();
   };
+  const [isOpenRechargeCard, setIsOpenRechargeCard] = useState(false);
+
+  const handleOnSuccessRechargeCard = async () => {
+    setIsOpenRechargeCard(false);
+    await mutate();
+  }
+
   return (
     <div>
       <h3>Tarjetas </h3>
@@ -24,12 +32,25 @@ export function CardView({ employeeCode }) {
         >
           Nueva Tarjeta
         </button>
+        <button
+          className="button is-primary"
+          onClick={() => setIsOpenRechargeCard(true)}
+        >
+          Recargar Tarjeta
+        </button>
       </div>
       {isOpenCreateCard && (
         <CardCreateView
           employeeCode={employeeCode}
           onCancel={() => setIsOpenCreateCard(false)}
           onSuccess={handleOnSuccessCreateCard}
+        />
+      )}
+      {isOpenRechargeCard && (
+        <CardRechargeView
+          employeeCode={employeeCode}
+          onCancel={() => setIsOpenRechargeCard(false)}
+          onSuccess={handleOnSuccessRechargeCard}
         />
       )}
       <table className="table is-bordered">

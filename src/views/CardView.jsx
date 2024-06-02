@@ -1,10 +1,37 @@
+import { useState } from "react";
 import { useFetch } from "../hooks/useFetch";
-export function CardView() {
-  const { data: cards, error, isLoading } = useFetch("/tarjetas/mostrar");
+import { CardCreateView } from "./CardCreateView";
 
+export function CardView({ employeeCode }) {
+  const {
+    data: cards,
+    error,
+    isLoading,
+    mutate,
+  } = useFetch("/tarjetas/mostrar");
+  const [isOpenCreateCard, setIsOpenCreateCard] = useState(false);
+  const handleOnSuccessCreateCard = async () => {
+    setIsOpenCreateCard(false);
+    await mutate();
+  };
   return (
     <div>
       <h3>Tarjetas </h3>
+      <div className="buttons ">
+        <button
+          className="button is-primary"
+          onClick={() => setIsOpenCreateCard(true)}
+        >
+          Nueva Tarjeta
+        </button>
+      </div>
+      {isOpenCreateCard && (
+        <CardCreateView
+          employeeCode={employeeCode}
+          onCancel={() => setIsOpenCreateCard(false)}
+          onSuccess={handleOnSuccessCreateCard}
+        />
+      )}
       <table className="table is-bordered">
         <thead>
           <tr>
@@ -29,13 +56,13 @@ export function CardView() {
           ) : (
             cards.map((card) => (
               <tr key={card.codigo}>
-              <td>{card.codigo}</td>
-              <td>{card.tipo}</td>
-              <td>{card.estacion}</td>
-              <td>{card.empleado}</td>
-              <td>{card.cliente}</td>
-              <td>{card.saldo}</td>
-              <td>{card.fecha}</td>
+                <td>{card.codigo}</td>
+                <td>{card.tipo}</td>
+                <td>{card.estacion}</td>
+                <td>{card.empleado}</td>
+                <td>{card.cliente}</td>
+                <td>{card.saldo}</td>
+                <td>{card.fecha}</td>
               </tr>
             ))
           )}

@@ -28,8 +28,8 @@ export function EmployeeView() {
           ) : (
             employees.map((employee) => (
               <tr key={employee.codigo}>
-                <td>{employee.nombres}</td>
-                <td>{employee.apellidos}</td>
+                <td>{employee.nombre}</td>
+                <td>{employee.materno} {employee.paterno}</td>
                 <td>{employee.dni}</td>
                 <td>{employee.ciudad}</td>
                 <td>{employee.direccion}</td>

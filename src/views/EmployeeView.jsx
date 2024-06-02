@@ -1,10 +1,23 @@
 import { useFetch } from "../hooks/useFetch";
+import { useState } from "react";
+import { EmployeeCreateView } from "./EmployeeCreateView";
+
 export function EmployeeView() {
   const { data: employees, error, isLoading } = useFetch("/empleados/mostrar");
 
+  const [isOpenCreateEmployee, setIsOpenCreateEmployee] = useState(false);
   return (
     <div>
       <h3>Contenido de los Empleados </h3>
+      {isOpenCreateEmployee && <EmployeeCreateView />}
+      <div className="buttons ">
+        <button
+          className="button is-primary"
+          onClick={() => setIsOpenCreateEmployee(true)}
+        >
+          Nuevo Empleado
+        </button>
+      </div>
       <table className="table is-bordered">
         <thead>
           <tr>
@@ -29,7 +42,9 @@ export function EmployeeView() {
             employees.map((employee) => (
               <tr key={employee.codigo}>
                 <td>{employee.nombre}</td>
-                <td>{employee.materno} {employee.paterno}</td>
+                <td>
+                  {employee.materno} {employee.paterno}
+                </td>
                 <td>{employee.dni}</td>
                 <td>{employee.ciudad}</td>
                 <td>{employee.direccion}</td>
